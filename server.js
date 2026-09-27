@@ -224,6 +224,7 @@ const app = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   try {
     if (req.method === 'OPTIONS') { res.writeHead(204, { 'access-control-allow-origin': '*', 'access-control-allow-methods': 'GET,POST,OPTIONS', 'access-control-allow-headers': 'content-type' }); return res.end(); }
+    if (req.method === 'GET' && url.pathname === '/api/config') return sendJson(res, 200, { realtime: null });
     if (req.method === 'POST' && url.pathname === '/api/rooms') {
       const body = await readBody(req); const { room, player } = createRoom(body.name);
       rooms.set(room.code, room); publish(room);

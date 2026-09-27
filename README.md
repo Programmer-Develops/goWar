@@ -14,14 +14,15 @@ Open `http://localhost:3000` on the host computer. For friends on the same Wi-Fi
 
 The local Node server keeps room data in memory. Restarting it ends any active local rooms.
 
-## Deploy to Vercel
+## Deploy to Vercel with Supabase
 
-The browser app is served from `public/`, and room API routes live under `api/rooms/`. Vercel runs API requests in separate serverless instances, so deployed rooms use Upstash Redis rather than the local server's in-memory store. Connect an Upstash Redis database to the Vercel project and make these environment variables available to the deployment:
+The browser app is served from `public/`; serverless room routes are under `api/`. Create a Supabase project, then run [`db/schema.sql`](db/schema.sql) in its SQL Editor. Add these Vercel environment variables:
 
-- `UPSTASH_REDIS_REST_URL`
-- `UPSTASH_REDIS_REST_TOKEN`
+- `SUPABASE_URL` — the Supabase project URL.
+- `SUPABASE_SECRET_KEY` — a server-only key used by the room API. Never put it in browser code.
+- `SUPABASE_PUBLISHABLE_KEY` — used by the browser to subscribe to room update broadcasts.
 
-The API also recognizes `KV_REST_API_URL` and `KV_REST_API_TOKEN`. After connecting storage, redeploy. Rooms expire after 24 hours. The browser checks room state every 1.8 seconds while the tab is open.
+The API also accepts the legacy `SUPABASE_SERVICE_ROLE_KEY` and `SUPABASE_ANON_KEY` names. After adding the variables, redeploy. Rooms expire 24 hours after their last update. Supabase Broadcast sends room change notices immediately; the browser polls every five seconds as a fallback.
 
 ## Rules
 

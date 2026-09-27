@@ -66,28 +66,34 @@ function setSession(result) {
 function connect() {
   if (syncTimer) clearInterval(syncTimer);
   if (!session) return;
-  const sync = async () => {
-    if (!session || syncInFlight || document.visibilityState === 'hidden') return;
-    syncInFlight = true;
-    try {
-      const result = await request(`/api/rooms/${session.code}?playerId=${encodeURIComponent(session.playerId)}`);
-      const priorPhase = game?.phase;
-      const priorRound = game?.round;
-      game = result.state;
-      if (game.round !== priorRound || game.phase !== priorPhase) {
-        sourceSelection = null;
-        targetSelection = null;
-        troopCount = 1;
-      }
-      render();
-    } catch {
-      // Keep the last state on screen during a brief network interruption.
-    } finally {
-      syncInFlight = false;
+  refreshRoom();
+  subscribeToRoomUpdates();
+  syncTimer = setInterval(refreshRoom, 5000);
+}
+async function refreshRoom() {
+  if (!session || syncInFlight || document.visibilityState === 'hidden') return;
+  syncInFlight = true;
+  try {
+    const result = await request(`/api/rooms/${session.code}?playerId=${encodeURIComponent(session.playerId)}`);
+    const priorPhase = game?.phase;
+    const priorRound = game?.round;
+    game = result.state;
+    if (game.round !== priorRound || game.phase !== priorPhase) {
+      sourceSelection = null;
+      targetSelection = null;
+      troopCount = 1;
     }
-  };
-  sync();
-  syncTimer = setInterval(sync, 1800);
+    render();
+  } catch {
+    // Keep the last state on screen during a brief network interruption.
+  } finally {
+    syncInFlight = false;
+  }
+}
+function subscribeToRoomUpdates() {
+  if (session && window.goWarRealtime) {
+    window.goWarRealtime.subscribe(session.code, () => refreshRoom());
+  }
 }
 function handleVisibility() {
   if (document.visibilityState === 'visible' && session) {
@@ -304,6 +310,7 @@ function setKind(kind) {
 async function leaveRoom() {
   if (syncTimer) clearInterval(syncTimer);
   syncTimer = null;
+  window.goWarRealtime?.unsubscribe();
   session = null; game = null; persist();
   warRoom.classList.add('hidden'); entry.classList.remove('hidden');
 }
@@ -329,6 +336,7 @@ function bindUI() {
     if ((event.key === 'Enter' || event.key === ' ') && event.target.matches('.sector')) event.preventDefault();
   });
   document.addEventListener('visibilitychange', handleVisibility);
+  window.addEventListener('gowar-realtime-ready', subscribeToRoomUpdates);
 }
 bindUI();
 const saved = JSON.parse(localStorage.getItem(storeKey) || 'null');

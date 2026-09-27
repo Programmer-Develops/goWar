@@ -1,32 +1,44 @@
-const crypto = require('node:crypto');
-const { publicState } = require('../server');
+const tablePath = 'gowar_rooms';
+const roomTtlMs = 24 * 60 * 60 * 1000;
 
-const roomKey = (code) => `gowar:room:${code}`;
-const lockKey = (code) => `gowar:lock:${code}`;
-const roomTtlSeconds = 60 * 60 * 24;
-const releaseScript = "if redis.call('GET', KEYS[1]) == ARGV[1] then return redis.call('DEL', KEYS[1]) else return 0 end";
-
-function credentials() {
-  const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
-  if (!url || !token) {
-    const error = new Error('Room storage is not configured. Connect an Upstash Redis database to this Vercel project.');
+function credentials(needsSecret = true) {
+  const url = process.env.SUPABASE_URL;
+  const secret = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const publishable = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_ANON_KEY;
+  if (!url || (needsSecret && !secret)) {
+    const error = new Error('Supabase is not configured. Set SUPABASE_URL and SUPABASE_SECRET_KEY in the Vercel project.');
     error.status = 503;
     throw error;
   }
-  return { url: url.replace(/\/$/, ''), token };
+  return { url: url.replace(/\/$/, ''), secret, publishable };
 }
 
-async function redis(command) {
-  const { url, token } = credentials();
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' },
-    body: JSON.stringify(command),
+async function supabase(path, { method = 'GET', body, prefer } = {}) {
+  const { url, secret } = credentials();
+  const headers = {
+    apikey: secret,
+    authorization: `Bearer ${secret}`,
+    accept: 'application/json',
+  };
+  if (body !== undefined) headers['content-type'] = 'application/json';
+  if (prefer) headers.prefer = prefer;
+  const response = await fetch(`${url}/rest/v1/${path}`, {
+    method,
+    headers,
+    ...(body === undefined ? {} : { body: JSON.stringify(body) }),
   });
-  const data = await response.json();
-  if (!response.ok || data.error) throw new Error(data.error || `Room storage returned ${response.status}.`);
-  return data.result;
+  const raw = await response.text();
+  let data = null;
+  try { data = raw ? JSON.parse(raw) : null; } catch { data = raw; }
+  if (!response.ok) {
+    const message = data?.message || data?.error_description || data?.hint || `Supabase returned ${response.status}.`;
+    const error = new Error(message);
+    error.status = response.status === 401 || response.status === 403 ? 503 : response.status;
+    error.databaseCode = data?.code;
+    if (data?.code === 'PGRST205') error.message = 'Supabase table gowar_rooms is missing. Apply db/schema.sql in the Supabase SQL Editor.';
+    throw error;
+  }
+  return data;
 }
 
 function send(res, status, value) {
@@ -49,12 +61,8 @@ function method(req, res, expected) {
 
 async function readJson(req) {
   if (req.body && typeof req.body === 'object' && !Buffer.isBuffer(req.body)) return req.body;
-  if (typeof req.body === 'string') {
-    try { return req.body ? JSON.parse(req.body) : {}; }
-    catch { throw Object.assign(new Error('Invalid JSON.'), { status: 400 }); }
-  }
-  if (Buffer.isBuffer(req.body)) {
-    try { return req.body.length ? JSON.parse(req.body.toString('utf8')) : {}; }
+  if (typeof req.body === 'string' || Buffer.isBuffer(req.body)) {
+    try { return req.body.length ? JSON.parse(String(req.body)) : {}; }
     catch { throw Object.assign(new Error('Invalid JSON.'), { status: 400 }); }
   }
   let body = '';
@@ -66,40 +74,75 @@ async function readJson(req) {
   catch { throw Object.assign(new Error('Invalid JSON.'), { status: 400 }); }
 }
 
+function queryString(values) {
+  return new URLSearchParams(values).toString();
+}
+
+async function findRoom(code) {
+  const query = queryString({ code: `eq.${code}`, select: 'state,revision,expires_at' });
+  const rows = await supabase(`${tablePath}?${query}`);
+  const row = rows?.[0];
+  if (!row || Date.parse(row.expires_at) <= Date.now()) {
+    throw Object.assign(new Error('Room not found or expired.'), { status: 404 });
+  }
+  return row;
+}
+
 async function getRoom(code) {
-  const raw = await redis(['GET', roomKey(code)]);
-  if (!raw) throw Object.assign(new Error('Room not found or expired.'), { status: 404 });
-  return JSON.parse(raw);
+  const row = await findRoom(code);
+  return row.state;
+}
+
+function announceUpdate(code, revision) {
+  const { url, secret } = credentials();
+  const endpoint = `${url}/realtime/v1/api/broadcast/gowar:${code}/events/state`;
+  return fetch(endpoint, {
+    method: 'POST',
+    headers: { apikey: secret, authorization: `Bearer ${secret}`, 'content-type': 'application/json' },
+    body: JSON.stringify({ revision }),
+  }).catch(() => {});
 }
 
 async function saveRoom(room) {
-  await redis(['SET', roomKey(room.code), JSON.stringify(room), 'EX', String(roomTtlSeconds)]);
+  const now = new Date();
+  await supabase(tablePath, {
+    method: 'POST',
+    prefer: 'return=minimal',
+    body: { code: room.code, state: room, revision: 1, updated_at: now.toISOString(), expires_at: new Date(now.getTime() + roomTtlMs).toISOString() },
+  });
+}
+
+async function updateRoom(room, revision) {
+  const now = new Date();
+  const query = queryString({ code: `eq.${room.code}`, revision: `eq.${revision}` });
+  const rows = await supabase(`${tablePath}?${query}`, {
+    method: 'PATCH',
+    prefer: 'return=representation',
+    body: { state: room, revision: revision + 1, updated_at: now.toISOString(), expires_at: new Date(now.getTime() + roomTtlMs).toISOString() },
+  });
+  if (rows?.length) await announceUpdate(room.code, revision + 1);
+  return Boolean(rows?.length);
+}
+
+async function cleanupExpiredRooms() {
+  const query = queryString({ expires_at: `lt.${new Date().toISOString()}` });
+  await supabase(`${tablePath}?${query}`, { method: 'DELETE', prefer: 'return=minimal' });
+}
+
+async function publicRealtimeConfig() {
+  const { url, publishable } = credentials(false);
+  return publishable ? { url, publishableKey: publishable } : null;
 }
 
 async function mutateRoom(code, mutate) {
-  const key = lockKey(code);
-  const token = crypto.randomUUID();
-  let acquired = false;
-  for (let attempt = 0; attempt < 24; attempt += 1) {
-    const result = await redis(['SET', key, token, 'NX', 'PX', '12000']);
-    if (result === 'OK') { acquired = true; break; }
-    await new Promise((resolve) => setTimeout(resolve, 65));
-  }
-  if (!acquired) throw Object.assign(new Error('The room is busy. Please try that move again.'), { status: 409 });
-  try {
-    const room = await getRoom(code);
+  for (let attempt = 0; attempt < 12; attempt += 1) {
+    const current = await findRoom(code);
+    const room = current.state;
     const result = await mutate(room);
-    await saveRoom(room);
-    return result;
-  } finally {
-    await redis(['EVAL', releaseScript, '1', key, token]).catch(() => {});
+    if (await updateRoom(room, Number(current.revision))) return result;
+    await new Promise((resolve) => setTimeout(resolve, 20 + attempt * 15));
   }
+  throw Object.assign(new Error('The room changed too quickly. Please try that move again.'), { status: 409 });
 }
 
-function playerOrError(room, id) {
-  const player = room.players.find((item) => item.id === id);
-  if (!player) throw Object.assign(new Error('You are not seated in this room.'), { status: 403 });
-  return player;
-}
-
-module.exports = { getRoom, method, mutateRoom, playerOrError, readJson, redis, roomKey, saveRoom, send, sendError };
+module.exports = { cleanupExpiredRooms, getRoom, method, mutateRoom, publicRealtimeConfig, readJson, saveRoom, send, sendError };
