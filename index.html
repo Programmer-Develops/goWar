@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#111815" />
+    <meta name="description" content="A real-time, simultaneous-turn strategy game. Command a war room with 2–8 players." />
+    <title>goWar — Command the quiet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <main id="entry" class="entry-screen">
+      <nav class="entry-nav">
+        <a class="brand" href="/" aria-label="goWar home"><span class="brand-mark"><i></i><i></i><i></i></span><span>go<span class="brand-light">War</span></span></a>
+        <span class="nav-note"><b class="pulse-dot"></b> TACTICAL COMMAND, REAL TIME</span>
+        <span class="nav-version">FIELD MANUAL&nbsp; / &nbsp;01</span>
+      </nav>
+      <section class="entry-hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-line"></span> THEATRE OF OPERATIONS&nbsp;·&nbsp; 2—8 COMMANDERS</p>
+          <h1>A quieter<br /><em>move.</em> A bigger<br />war.</h1>
+          <p class="hero-description">Build a war room. Make your move in secret. When everyone is ready, the map changes for good.</p>
+          <div class="entry-panels">
+            <form id="create-form" class="entry-panel">
+              <label for="create-name" class="field-label">YOUR CALLSIGN</label>
+              <div class="field-row"><input id="create-name" name="name" maxlength="18" placeholder="e.g. Major Sable" autocomplete="nickname" required /><button class="button button-primary" type="submit">Create room <span>↗</span></button></div>
+              <p class="panel-foot"><span class="mini-lock">◈</span> A private room code appears instantly.</p>
+            </form>
+            <form id="join-form" class="entry-panel entry-panel-join">
+              <label for="join-name" class="field-label">JOIN AN OPERATION</label>
+              <div class="field-row"><input id="join-name" name="name" maxlength="18" placeholder="Your callsign" autocomplete="nickname" required /><button class="button button-quiet" type="submit">Join</button></div>
+              <input id="join-code" class="code-input" name="code" maxlength="5" placeholder="ROOM CODE" autocomplete="off" spellcheck="false" required />
+              <p class="panel-foot">Get the five-character code from your host.</p>
+            </form>
+          </div>
+          <div class="entry-footer"><span><b class="pulse-dot"></b> NO DOWNLOAD. NO ACCOUNT.</span><span>ONE MAP. YOUR TABLE.</span></div>
+        </div>
+        <div class="hero-visual" aria-label="Illustrated territorial campaign map">
+          <div class="map-stamp">G-01 <span>•</span> IRON VEIL</div>
+          <div class="hero-map-grid"></div>
+          <svg class="hero-map-lines" viewBox="0 0 520 580" aria-hidden="true">
+            <path class="contour contour-one" d="M-38 118C55 35 122 68 185 115s102 41 158-6 136-56 209 4M-51 155c93-83 159-48 222-2s102 43 158-5 135-57 209 4M-67 193c93-84 159-49 222-2s102 42 158-6 135-56 209 5" />
+            <path class="contour contour-two" d="M-32 397c62-79 144-92 208-41s122 71 185 39 106-92 190-45M-53 429c63-79 144-91 208-40s122 70 185 38 106-91 190-44M-74 462c63-79 144-91 208-40s122 70 185 38 106-91 190-44" />
+            <path class="route route-dash" d="M61 351 166 244l84 35 109-132 94 89-53 169-119 74-89-62-92 83z" />
+            <path class="route route-glow" d="M61 351 166 244l84 35 109-132 94 89-53 169-119 74-89-62-92 83z" />
+            <path class="route route-solid" d="M61 351 166 244l84 35 109-132 94 89-53 169-119 74-89-62-92 83z" />
+            <path class="route route-solid secondary-route" d="m166 244 19 177 96 58m-31-200 150-43 23 126" />
+          </svg>
+          <span class="terrain-label label-north">NORTHWATCH<span>HIGH GROUND</span></span>
+          <span class="terrain-label label-coast">SUNKEN COAST<span>LANDING ZONE</span></span>
+          <span class="terrain-label label-east">IRON PASS<span>SUPPLY ROUTE</span></span>
+          <div class="map-node node-a"><span class="node-ring"></span><b>01</b></div><div class="map-node node-b"><span class="node-ring"></span><b>06</b></div><div class="map-node node-c owned"><span class="node-ring"></span><b>09</b></div><div class="map-node node-d"><span class="node-ring"></span><b>12</b></div><div class="map-node node-e"><span class="node-ring"></span><b>03</b></div><div class="map-node node-f"><span class="node-ring"></span><b>14</b></div>
+          <div class="map-coordinates">34° 06′ N &nbsp; / &nbsp; 19° 42′ E</div>
+          <div class="visual-caption"><span class="caption-dot"></span> THEATRE MAP <span class="caption-sep">/</span> SECTOR CONTROL</div>
+          <div class="map-scan" aria-hidden="true"></div>
+        </div>
+        <div class="hero-side-note"><span>SIMULTANEOUS ORDERS</span><i></i><span>ONE WINNER</span></div>
+      </section>
+      <section class="how-strip">
+        <div class="how-item"><span class="how-number">01</span><div><b>Make a room</b><p>Share your code with 1–7 friends.</p></div></div>
+        <span class="how-arrow">↗</span>
+        <div class="how-item"><span class="how-number">02</span><div><b>Plan in secret</b><p>Reinforce, advance, or strike.</p></div></div>
+        <span class="how-arrow">↗</span>
+        <div class="how-item"><span class="how-number">03</span><div><b>Take the map</b><p>Win bases. Outlast every rival.</p></div></div>
+        <div class="how-end">RULES OF ENGAGEMENT <span>→</span></div>
+      </section>
+    </main>
+
+    <div id="war-room" class="war-room hidden">
+      <header class="app-header">
+        <a class="brand" href="/" aria-label="goWar home"><span class="brand-mark"><i></i><i></i><i></i></span><span>go<span class="brand-light">War</span></span></a>
+        <div class="header-operation"><span class="live-label"><b class="pulse-dot"></b> LIVE OPERATIONS</span><span class="header-divider"></span><span id="room-context">WAR ROOM <b id="header-code">·····</b></span></div>
+        <button id="leave-button" class="icon-button" title="Leave room" aria-label="Leave room">↗<span class="leave-label">Exit</span></button>
+      </header>
+
+      <section id="lobby-view" class="lobby-view">
+        <div class="lobby-main">
+          <p class="eyebrow"><span class="eyebrow-line"></span> ASSEMBLE YOUR COMMAND</p>
+          <div class="lobby-title-row"><div><h1>War room<span class="title-period">.</span></h1><p class="muted-copy">Waiting on your commanders to join the operation.</p></div><div class="lobby-room-code"><span>ROOM CODE</span><button id="room-code-copy" class="room-code-button"><b id="lobby-code">·····</b><span>▣</span></button></div></div>
+          <div class="lobby-divider"><span>COMMAND ROSTER</span><span id="roster-count">01 / 08 SEATS</span></div>
+          <div id="lobby-players" class="lobby-players"></div>
+          <div class="lobby-bottom"><p><span class="mini-lock">◈</span> Your orders stay hidden until every commander is ready.</p><button id="start-button" class="button button-primary">Deploy operation <span>↗</span></button></div>
+          <p id="lobby-hint" class="hint-line">Minimum 2 commanders required to deploy.</p>
+        </div>
+        <aside class="lobby-aside"><div class="aside-map-art"><div class="aside-map-circle circle-one"></div><div class="aside-map-circle circle-two"></div><svg viewBox="0 0 400 380" aria-hidden="true"><path d="m48 249 64-95 77 24 58-83 69 53-21 93-76 40-68-30-57 76z" /><path d="m112 154 39 97m38-73 105-30m-43 133 46-93m-97-20 16-96" /></svg><span class="aside-locator">⌖</span><span class="aside-sector sector-a">02&nbsp; /&nbsp; OLD HARBOR</span><span class="aside-sector sector-b">11&nbsp; /&nbsp; LAST LIGHT</span><span class="aside-coordinate">FIELD GRID 4A-19C</span></div><div class="aside-info"><p class="eyebrow"><span class="eyebrow-line"></span> OBJECTIVE</p><h3>Control the<br /><em>command bases.</em></h3><p>The first commander to hold a majority of bases wins. No alliances are binding.</p><div class="aside-info-foot"><span><b class="mini-lock">◈</b> 1 SEALED ORDER / ROUND</span><span>IRON VEIL &nbsp;·&nbsp; 16 SECTORS</span></div></div></aside>
+      </section>
+
+      <section id="game-view" class="game-view hidden">
+        <div class="game-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> OPERATION IRON VEIL</p><h1>Campaign map<span class="title-period">.</span></h1></div><div class="round-card"><span>ROUND</span><b id="round-number">01</b><i></i><span id="phase-label">PLANNING PHASE</span></div></div>
+        <div class="campaign-layout">
+          <div class="map-panel">
+            <div class="map-panel-top"><div><span class="map-overline">THEATRE&nbsp; / &nbsp;NORTHERN CONTINENT</span><h2>Territorial control</h2></div><div class="map-top-right"><span id="map-live-status"><i class="tiny-dot"></i> ORDERS OPEN</span><button id="center-map" class="map-expand" title="Recenter map" aria-label="Recenter map">⊙</button></div></div>
+            <div id="campaign-map" class="campaign-map" aria-label="Campaign map with selectable sectors"><svg id="map-network" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg><div id="sector-layer" class="sector-layer"></div><div class="map-scale">GRID&nbsp; 16 × 16 <span>•</span> CARTOGRAPHY DIVISION</div><div id="map-hint" class="map-hint"><span>↖</span> SELECT A SECTOR TO ISSUE ORDERS</div></div>
+            <div class="map-legend"><span><i class="legend-dot self-dot"></i> YOUR FORCES</span><span><i class="legend-dot rival-dot"></i> RIVAL FORCES</span><span><i class="legend-dot neutral-dot"></i> UNCLAIMED</span><span class="legend-help">Click a sector for details &nbsp;·&nbsp; <kbd>ESC</kbd> clear selection</span></div>
+          </div>
+          <aside class="control-rail">
+            <section class="rail-card your-command"><div class="rail-heading"><span>YOUR COMMAND</span><span id="player-state-label" class="status-chip">PLANNING</span></div><div id="self-card" class="self-player-row"></div><div class="arsenal-grid"><div><span>SUPPLY</span><b id="supply-count">03</b><i>+</i></div><div><span>ROCKETS</span><b id="rocket-count">02</b><i>↗</i></div><div><span>SECTORS</span><b id="territory-count">01</b><i>◈</i></div></div><div class="resource-note">Supply restores each round. Ports replenish rockets.</div></section>
+            <section class="rail-card order-card"><div class="rail-heading"><span>ISSUE AN ORDER</span><span class="round-small" id="order-round">R.01</span></div><div id="order-lock-state" class="order-lock-state"><span class="lock-emblem">◈</span><span>One order. Keep it sealed until ready.</span></div><div id="order-form-wrap"><div class="order-types" role="tablist" aria-label="Order type"><button class="order-type active" data-kind="attack" role="tab"><span>↗</span> Advance</button><button class="order-type" data-kind="reinforce" role="tab"><span>⊕</span> Reinforce</button><button class="order-type" data-kind="rocket" role="tab"><span>◎</span> Rocket</button></div><div id="order-instructions" class="order-instructions">Select one of your sectors, then a connected target.</div><div id="selection-summary" class="selection-summary">No sector selected</div><div id="troop-control" class="troop-control"><label for="troop-count">ADVANCING FORCE</label><div class="stepper"><button id="troop-minus" aria-label="Remove one troop">−</button><span id="troop-count">01</span><button id="troop-plus" aria-label="Add one troop">+</button></div></div><div id="order-error" class="order-error hidden"></div><button id="submit-order" class="button button-primary order-submit" disabled>Lock in order <span>↗</span></button></div><div id="order-wait" class="order-wait hidden"><span class="wait-mark">◈</span><b>Order sealed</b><p id="order-wait-text">Waiting for the other commanders.</p><span class="waiting-orbit"></span></div></section>
+            <section class="rail-card players-card"><div class="rail-heading"><span>COMMANDERS</span><span id="commanders-count" class="round-small">0 ONLINE</span></div><div id="players-list" class="players-list"></div></section>
+          </aside>
+        </div>
+        <div class="bottom-strip"><div class="event-card"><div class="event-heading"><span>FIELD DISPATCHES</span><span class="dispatch-live"><i></i> LIVE FEED</span></div><div id="event-feed" class="event-feed"></div></div><div class="rules-card"><span class="rules-stamp">RULES OF ENGAGEMENT</span><h3>Take ground.<br /><em>Hold the bases.</em></h3><p>Control a majority of command bases, or be the last force standing.</p><span class="rules-foot">SIMULTANEOUS TURNS &nbsp;·&nbsp; SEALED ORDERS</span></div></div>
+      </section>
+      <section id="winner-banner" class="winner-banner hidden"><div class="winner-seal">★</div><div><span class="eyebrow">OPERATION CONCLUDED</span><h2 id="winner-title">The war is over.</h2><p id="winner-reason"></p></div><button id="new-room-button" class="button button-primary">Return to command <span>↗</span></button></section>
+      <footer class="app-footer"><span>goWar &nbsp;·&nbsp; PRIVATE WAR ROOM</span><span>IRON VEIL CAMPAIGN &nbsp; / &nbsp; BUILD 01</span><span>YOUR MOVE MATTERS.</span></footer>
+    </div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

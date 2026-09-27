@@ -1,0 +1,9 @@
+{
+  "name": "gowar",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A real-time multiplayer territorial strategy game",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
