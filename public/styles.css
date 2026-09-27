@@ -8,3 +8,349 @@
 @media(max-width:1080px){.entry-screen{padding:0 4%}.entry-hero{grid-template-columns:minmax(435px,1fr) 43%;padding-left:1%;padding-right:1%}.hero-visual{width:44%;right:1%;height:535px}.hero-copy h1{font-size:75px}.hero-description{max-width:360px}.war-room{padding:0 3%}.campaign-layout{grid-template-columns:minmax(440px,1fr) 286px}.bottom-strip{grid-template-columns:1fr 286px}.campaign-map{height:410px}.sector{width:88px;min-height:55px;padding-left:36px}.sector:before{left:8px;width:20px;height:22px}.sector .sector-id{left:14px}.sector .sector-name{max-width:50px;font-size:7px}}
 @media(max-width:820px){.entry-hero{min-height:690px;display:flex;align-items:flex-start;padding:63px 4% 310px}.hero-copy{margin:0}.hero-visual{top:auto;bottom:8px;right:4%;height:280px;width:56%;max-width:none}.hero-side-note{right:1%;font-size:6px}.hero-map-lines{inset:0}.label-north{top:20%}.label-east{top:40%}.label-coast{bottom:18%}.node-a{top:49%}.node-b{top:35%}.node-c{top:64%}.node-d{top:41%}.node-e{top:23%}.node-f{bottom:9%}.how-strip{gap:14px;padding:0 3%;flex-wrap:wrap}.how-item{min-width:175px}.how-end{display:none}.lobby-view{grid-template-columns:1fr;gap:20px;padding:42px 3%}.lobby-main{max-width:none}.lobby-aside{min-height:0;display:grid;grid-template-columns:1fr 1fr}.aside-map-art{height:auto;min-height:200px;border:0;border-right:1px solid #38453b}.aside-info{padding:18px}.aside-info-foot{flex-direction:column;gap:6px}.campaign-layout{grid-template-columns:minmax(0,1fr) 280px}.bottom-strip{grid-template-columns:minmax(0,1fr) 280px}.campaign-map{height:390px}.map-legend{gap:10px}.legend-help{display:none}}
 @media(max-width:640px){.entry-screen{padding:0 17px}.entry-nav{height:64px}.nav-note{font-size:7px;letter-spacing:.04em}.nav-version{display:none}.entry-hero{padding:48px 0 245px;min-height:790px}.hero-copy h1{font-size:66px}.hero-description{font-size:12px;max-width:315px;margin:18px 0 21px}.entry-panels{width:100%}.entry-panel{padding:12px}.field-row{gap:5px}.button{padding:0 11px}.entry-panel input{padding:9px 8px;font-size:11px}.button-primary>span{padding-left:7px}.entry-footer{font-size:6px;letter-spacing:.05em}.hero-visual{width:100%;height:250px;right:0;bottom:0}.hero-side-note{display:none}.how-strip{min-height:130px;align-items:flex-start;gap:9px;padding:15px 0;display:grid;grid-template-columns:1fr 1fr}.how-item{min-width:0}.how-item p{font-size:8px}.how-arrow{display:none}.lobby-view{padding:31px 0 25px}.lobby-title-row{align-items:flex-start;flex-direction:column}.lobby-title-row h1{font-size:39px}.lobby-room-code{align-items:flex-start;gap:2px}.lobby-divider{padding-top:22px}.lobby-players{grid-template-columns:1fr}.lobby-empty{min-height:42px}.lobby-bottom{align-items:flex-start;flex-direction:column}.lobby-bottom p{margin:0}.lobby-bottom .button{width:100%}.lobby-aside{grid-template-columns:1fr}.aside-map-art{min-height:180px;border-right:0;border-bottom:1px solid #38453b}.aside-info-foot{flex-direction:row}.app-header{height:59px}.app-header .brand{font-size:17px}.header-operation{gap:8px}.live-label{font-size:6px}.header-divider{height:13px}.header-operation #room-context{font-size:7px}.header-operation #room-context b{margin-left:3px}.icon-button{min-width:50px;height:27px}.leave-label{font-size:7px}.war-room{padding:0 14px}.game-view{padding-top:23px}.game-heading{align-items:flex-start}.game-heading h1{font-size:30px}.game-heading .eyebrow{font-size:6px}.round-card{height:42px;min-width:115px;padding:0 7px;gap:6px}.round-card>span:first-child{font-size:6px}.round-card b{font-size:19px}.round-card i{margin:0}.round-card #phase-label{max-width:50px;line-height:1.2;font-size:6px}.campaign-layout{grid-template-columns:1fr}.campaign-map{height:min(102vw,430px);min-height:320px}.map-panel-top{height:57px;padding:0 10px}.map-overline{font-size:6px}.map-panel-top h2{font-size:12px}.map-top-right{font-size:6px;gap:8px}.map-expand{width:23px;height:22px}.sector-layer{inset:4% 0 9%}.sector{width:78px;min-height:50px;padding-left:32px;padding-right:4px}.sector:before{width:18px;height:20px;left:7px}.sector .sector-id{left:12px;font-size:6px}.sector .sector-name{max-width:43px;font-size:7px}.sector .sector-status{font-size:5px}.sector .sector-troops{font-size:8px;right:4px;top:4px}.map-legend{height:31px;padding:0 7px;justify-content:space-between;gap:3px;font-size:5px}.legend-dot{width:5px;height:5px;margin-right:3px}.control-rail{display:grid;grid-template-columns:1fr;gap:8px}.rail-card{padding:11px}.order-card{min-height:0}.players-card{min-height:90px}.players-list{grid-template-columns:1fr 1fr}.bottom-strip{grid-template-columns:1fr;gap:8px;margin-top:8px}.event-card{min-height:80px}.event-item{max-width:100%;font-size:7px}.rules-card{min-height:103px}.winner-banner{flex-wrap:wrap;padding:13px}.winner-seal{width:34px;height:34px}.winner-banner h2{font-size:14px}.winner-banner .button{width:100%;margin:0}.app-footer{font-size:5px;letter-spacing:.03em}.app-footer span:nth-child(2){display:none}}
+
+/* Sunrise field kit */
+:root{--bg:#efe3c9;--bg-raised:#f7efdE;--panel:#fbf7ed;--panel-2:#f3ecdD;--line:#c9bea5;--muted:#5f6a5f;--cream:#26362e;--mint:#58715c;--acid:#c79b52;--orange:#b95738;--red:#a8473f;--blue:#647d80;--shadow:0 22px 65px #5646331d}
+body{background:#efe3c9;color:#26362e}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 84% 0%,#f6dca2 0,transparent 37%),linear-gradient(180deg,#f4e9d2 0%,#efe3c9 47%,#e8dcc1 100%)}
+.grain{opacity:.075;mix-blend-mode:multiply}
+.entry-screen{color:#26362e}
+.entry-nav,.how-strip,.app-header,.app-footer{border-color:#71806b38}
+.brand{color:#28372f}
+.brand-light{color:#58715c}
+.brand-mark i{background:#efe3c9;border-color:#58715c}
+.nav-note{color:#55645a}
+.nav-version{color:#727969}
+.pulse-dot{background:#6d8a62;box-shadow:0 0 9px #6d8a6270}
+.hero-copy h1{color:#28372f}
+.hero-copy h1 em,.aside-info h3 em,.rules-card h3 em{color:#8b6836}
+.eyebrow{color:#5f6b60}
+.eyebrow-line{background:#9b7740}
+.hero-description{color:#556258}
+.entry-panel{background:#fbf7edeb;border-color:#bfb394;box-shadow:0 13px 32px #67563b12}
+.entry-panel-join{background:#f7efdeaa;border-color:#bfb394a6}
+.field-label{color:#657265}
+.entry-panel input{background:#f4eddd;color:#26362e;border-color:#c9bea5}
+.entry-panel-join input{background:#f5eedf}
+.entry-panel input::placeholder{color:#788073}
+.entry-panel input:focus{border-color:#8a774f;box-shadow:0 0 0 2px #b98e4930}
+.button-primary{background:#b95738;color:#fff8e9;box-shadow:0 3px 0 #8c3c29}
+.button-primary:hover:not(:disabled){background:#a94b30}
+.button-primary:disabled{box-shadow:none}
+.button-quiet{background:#e8ddc5;border-color:#a99c80;color:#344239}
+.button-quiet:hover{border-color:#8b6836;background:#f1e5cc}
+.panel-foot,.entry-footer{color:#687264}
+.mini-lock{color:#8b6836}
+.code-input{background:#f3e7ce!important}
+.entry-footer .pulse-dot{background:#70876a;box-shadow:none}
+.hero-visual{background:radial-gradient(ellipse at 72% 16%,#e8c47c 0,#d9c69b 17%,#aab29a 47%,#71816b 100%);border-color:#a99d7f;box-shadow:0 25px 65px #544b341e}
+.hero-visual:before{background:linear-gradient(135deg,#fff5da40,transparent 45%,#3e54411a)}
+.hero-map-grid{background-image:linear-gradient(#40523f17 1px,transparent 1px),linear-gradient(90deg,#40523f17 1px,transparent 1px)}
+.contour{stroke:#43533f;stroke-opacity:.27}
+.contour-two{stroke-opacity:.19}
+.route-dash{stroke:#fff4d4;stroke-opacity:.87}
+.route-glow{stroke:#fff1c4;stroke-opacity:.45}
+.route-solid{stroke:#425b48;stroke-opacity:.65}
+.map-stamp,.terrain-label,.visual-caption{color:#334338;text-shadow:0 1px 5px #f2e6c877}
+.map-stamp span,.caption-dot{color:#775c31;background:#9a7440}
+.terrain-label span,.map-coordinates{color:#4e6251}
+.map-node{background:#f2e7cc;border-color:#647257;color:#324235;box-shadow:0 3px 10px #35453126}
+.map-node.owned{color:#fff8e9;background:#58715c;border-color:#fff0c5;box-shadow:0 0 20px #4059414d}
+.node-ring{border-color:#40594166}
+.map-scan{opacity:.15;background:linear-gradient(transparent 49.8%,#fff7df70 50%,transparent 50.2%);background-size:100% 30px}
+.hero-side-note{color:#667064}
+.hero-side-note i{background:#a27b40}
+.how-item b{color:#2f4035}
+.how-item p{color:#637064}
+.how-number,.how-end span{color:#8b6836}
+.how-arrow,.how-end{color:#697366}
+.toast{background:#324638;color:#fff9eb;box-shadow:0 10px 35px #342a1b38}
+.toast.error{background:#a8473f;color:#fff4e8}
+.war-room{color:#26362e}
+.app-header{color:#5e695f}
+.header-operation #room-context{color:#5f695e}
+.header-operation #room-context b{color:#7d6035}
+.header-divider{background:#78806b4a}
+.live-label{color:#52624f}
+.live-label .pulse-dot{background:#70876a;box-shadow:0 0 7px #70876a65}
+.icon-button{border-color:#b8ad94;color:#465248;background:#f7efdd80}
+.icon-button:hover{border-color:#8e7040;background:#f7efdc}
+.lobby-title-row h1,.game-heading h1{color:#28372f}
+.muted-copy{color:#657164}
+.lobby-divider{border-color:#71806b52;color:#57665a}
+.lobby-divider span:last-child{color:#737a6b}
+.lobby-player{background:#fbf7ed;border-color:#c8bea6;box-shadow:0 2px 8px #5646330b}
+.lobby-player-copy b{color:#2e3d33}
+.lobby-player-copy span{color:#72796a}
+.lobby-empty{border-color:#b9ad92;color:#72796b;background:#f6eedc80}
+.empty-plus{color:#8a7043}
+.lobby-room-code>span{color:#667163}
+.room-code-button{color:#745a31}
+.room-code-button span{color:#667364}
+.lobby-bottom p,.hint-line{color:#626e61}
+.hint-line.error{color:#a8473f}
+.lobby-aside{background:#f8f0df;border-color:#bfb394;box-shadow:0 16px 50px #67563b1a}
+.aside-map-art{background:radial-gradient(ellipse at 70% 20%,#e8c37b,#c9c39f 43%,#768572 100%);border-color:#a89e81}
+.aside-map-art:before{background-image:linear-gradient(#44554222 1px,transparent 1px),linear-gradient(90deg,#44554222 1px,transparent 1px)}
+.aside-map-art svg{stroke:#fff4d5;stroke-opacity:.8}
+.aside-map-art svg path+path{stroke:#425642;stroke-opacity:.55}
+.aside-map-circle{border-color:#fff6dd65}
+.aside-locator{color:#fff4d0;text-shadow:0 0 12px #fff4d0}
+.aside-sector{color:#304036;text-shadow:0 1px 5px #f4e5c8a8}
+.aside-coordinate{color:#f8efd8}
+.aside-info .eyebrow{color:#58675a}
+.aside-info h3{color:#2d3c32}
+.aside-info>p:not(.eyebrow){color:#5d695d}
+.aside-info-foot{border-color:#b8ad956e;color:#6b7466}
+.game-heading .eyebrow{color:#5f6b60}
+.title-period{color:#8b6836}
+.round-card{background:#fbf7ed;border-color:#c7bca2;color:#657063;box-shadow:0 3px 11px #5646330d}
+.round-card>span:first-child{color:#72796b}
+.round-card b{color:#405a45}
+.round-card i{background:#c9bea5}
+.map-panel,.rail-card,.event-card,.rules-card{background:#fbf7ed;border-color:#c8bea6;box-shadow:0 5px 18px #544a3510}
+.map-panel-top{border-color:#d1c7af}
+.map-overline{color:#70796a}
+.map-panel-top h2{color:#2e3d33}
+.map-top-right{color:#667064}
+.tiny-dot{background:#718b67;box-shadow:0 0 6px #718b6759}
+.map-expand{border-color:#bcb198;background:#f3ecdD;color:#475649}
+.map-expand:hover{border-color:#987445;background:#efe4ce}
+.campaign-map{background-color:#d5d2b9;background-image:radial-gradient(ellipse at 72% 12%,#e7ca87 0,#d6d1b7 33%,#b5bea4 67%,#a0ad96 100%)}
+.campaign-map:before{opacity:.85;background-image:linear-gradient(#4d604516 1px,transparent 1px),linear-gradient(90deg,#4d604516 1px,transparent 1px)}
+.campaign-map:after{opacity:.65;background-image:repeating-radial-gradient(ellipse at 27% 25%,transparent 0 27px,#4e604015 28px,#4e604015 29px,transparent 30px,transparent 45px),repeating-radial-gradient(ellipse at 73% 73%,transparent 0 35px,#4e604012 36px,#4e604012 37px,transparent 38px,transparent 54px)}
+.campaign-map:focus-within{outline-color:#8b68367a}
+.map-edge{stroke:#4a5e4b82;stroke-width:.4;stroke-dasharray:1.4 1.1}
+.sector{background:#fbf7edf0;border-color:#827e6791;color:#26362e;box-shadow:0 3px 11px #4e513a2b;backdrop-filter:blur(3px)}
+.sector:hover{background:#fffaf0;border-color:#81663a;box-shadow:0 4px 13px #4e513a40}
+.sector:focus-visible{outline-color:#9a603f}
+.sector.selected{border-color:#996f3d;background:#fff8e9;box-shadow:0 0 0 2px #c69a503d,0 4px 12px #4e513a35}
+.sector.source-selected{border-color:#4f7055;box-shadow:0 0 0 2px #58715c55}
+.sector.target-available:after{border-color:#8a6b3f}
+.sector.owned-self{border-color:#58715c}
+.sector.owned-rival{border-color:#8c7555}
+.sector.neutral{border-color:#9b957f}
+.sector:before{background:var(--owner-color,#898773);opacity:.8}
+.sector.owner-self:before{background:#58715c;filter:drop-shadow(0 0 5px #58715c66)}
+.sector .sector-id{color:#fff8eb}
+.sector .sector-name{color:#29372f}
+.sector .sector-status{color:#687365}
+.sector .sector-troops{color:#29372f}
+.sector .sector-base{color:#8a6838}
+.sector .sector-rocket{color:#8a6838}
+.map-scale{color:#556450;text-shadow:0 1px 3px #f5ebd6}
+.map-scale span,.map-hint span{color:#875f31}
+.map-hint{color:#36483c;text-shadow:0 1px 3px #f7f0df}
+.map-legend{border-color:#d1c7af;color:#586457;background:#faf6eb}
+.self-dot{background:#58715c;box-shadow:none}
+.rival-dot{background:#a17b50}
+.neutral-dot{background:#a9a28a}
+.legend-help{color:#657063}
+.legend-help kbd{border-color:#bdb198;color:#536154;background:#f2ecdd}
+.rail-heading{color:#566458}
+.status-chip{border-color:#81947d;background:#e3eadc;color:#3e5b42}
+.status-chip.sealed{border-color:#b79568;background:#f0e5cf;color:#76562f}
+.self-player-row{border-color:#d1c7af}
+.self-name{color:#29382f}
+.self-label{color:#6e776a}
+.self-online{color:#58715c}
+.arsenal-grid>div{border-color:#d1c7af}
+.arsenal-grid>div>span{color:#687366}
+.arsenal-grid>div>b{color:#29382f}
+.arsenal-grid>div>i{color:#8a6838}
+.resource-note{color:#707a6b;border-color:#d1c7af}
+.round-small{color:#747b6e}
+.order-lock-state{color:#626f62}
+.lock-emblem,.wait-mark{color:#8a6838}
+.order-type{border-color:#c8bea6;background:#f2ecdd;color:#5f6c60}
+.order-type:hover{border-color:#9a8055;color:#324338;background:#f9f3e7}
+.order-type.active{background:#e3e9da;border-color:#71896c;color:#304937}
+.order-instructions{color:#536155}
+.selection-summary{border-color:#d0c6ae;background:#f3ecdc;color:#697367}
+.selection-summary.has-selection{color:#39493c;border-color:#8b937e;background:#eeecdF}
+.selection-summary b{color:#795c34}
+.troop-control label{color:#667164}
+.stepper{border-color:#bfb59d;background:#f4edde}
+.stepper button{color:#4a5c4e}
+.stepper button:hover:not(:disabled){color:#9d4a32}
+.stepper span{color:#29382f}
+.order-error{color:#a8473f}
+.order-wait>b{color:#314136}
+.order-wait p{color:#687467}
+.waiting-orbit{border-color:#71896c55}
+.waiting-orbit:before{background:#71896c;box-shadow:0 0 8px #71896c}
+.commander-copy b{color:#334238}
+.commander-copy small{color:#727b6d}
+.commander-readiness{background:#a29b84}
+.commander-readiness.ready{background:#58715c;box-shadow:0 0 6px #58715c6b}
+.commander-readiness.out{background:#a8473f}
+.event-heading{color:#5c6b5d}
+.dispatch-live{color:#667265}
+.dispatch-live i,.event-item i{background:#738966}
+.event-item{color:#455448}
+.event-item time{color:#747b6e}
+.no-events{color:#727a6d}
+.rules-card{background:linear-gradient(128deg,#efe4cc,#f9f2e4)}
+.rules-stamp{color:#6b7568}
+.rules-card h3{color:#2f3d33}
+.rules-card p{color:#606d60}
+.rules-foot{color:#74796b}
+.winner-banner{border-color:#8b9a7b;background:radial-gradient(ellipse at left,#e4e8d7,#faf5e9 73%)}
+.winner-seal{border-color:#687e60;color:#687e60;box-shadow:0 0 16px #687e6023}
+.winner-banner .eyebrow{color:#5e6b5c}
+.winner-banner h2{color:#2d3b31}
+.winner-banner p{color:#5d6a5e}
+.app-footer{color:#687366}
+
+@media(max-width:820px){
+  .entry-hero{padding-bottom:310px}
+  .hero-visual{background:radial-gradient(ellipse at 77% 20%,#e9c982 0,#d7d0ad 34%,#82917a 100%)}
+  .lobby-view{padding-top:42px}
+  .aside-map-art{background:radial-gradient(ellipse at 72% 18%,#e9c982,#d4cfad 44%,#819078 100%)}
+}
+@media(max-width:640px){
+  body:before{background:radial-gradient(ellipse at 88% 0%,#f4d99a 0,transparent 35%),linear-gradient(180deg,#f2e6cf,#ebdfc5 100%)}
+  .entry-screen{padding-right:17px;padding-left:17px}
+  .entry-nav{height:64px}
+  .nav-note{font-size:8px;letter-spacing:.03em;color:#4f5e52}
+  .entry-hero{padding:42px 0 245px;min-height:790px}
+  .hero-copy h1{font-size:64px}
+  .hero-description{font-size:13px;line-height:1.55;color:#4f5d51}
+  .field-label{font-size:9px}
+  .entry-panel input{font-size:12px;min-height:42px}
+  .button{min-height:42px;font-size:12px}
+  .panel-foot{font-size:9px}
+  .entry-footer{font-size:8px;letter-spacing:.035em}
+  .hero-visual{height:250px;width:100%;right:0;bottom:0}
+  .map-stamp,.visual-caption{font-size:8px}
+  .terrain-label{font-size:9px}
+  .terrain-label span{font-size:8px}
+  .map-coordinates{font-size:8px}
+  .how-strip{min-height:130px;padding:15px 0;gap:9px}
+  .how-item b{font-size:12px}
+  .how-item p{font-size:10px;line-height:1.35;color:#586457}
+  .how-number{font-size:11px}
+  .lobby-view{padding-top:31px}
+  .lobby-title-row h1{font-size:39px}
+  .muted-copy{font-size:13px}
+  .lobby-divider{font-size:9px}
+  .lobby-player-copy b{font-size:12px}
+  .lobby-player-copy span{font-size:9px}
+  .lobby-bottom p,.hint-line{font-size:10px;line-height:1.45}
+  .lobby-room-code>span{font-size:9px}
+  .room-code-button b{font-size:22px}
+  .aside-info h3{font-size:25px}
+  .aside-info>p:not(.eyebrow){font-size:12px}
+  .aside-info-foot{font-size:8px}
+  .app-header{height:59px}
+  .app-header .brand{font-size:17px}
+  .live-label{font-size:8px}
+  .header-operation #room-context{font-size:8px}
+  .icon-button{min-width:58px;height:32px}
+  .leave-label{font-size:9px}
+  .war-room{padding:0 12px}
+  .game-view{padding-top:23px}
+  .game-heading h1{font-size:30px}
+  .game-heading .eyebrow{font-size:8px}
+  .round-card{height:46px;min-width:127px;padding:0 8px}
+  .round-card>span:first-child,.round-card #phase-label{font-size:8px}
+  .campaign-layout{grid-template-columns:1fr}
+  .campaign-map{height:min(102vw,430px);min-height:320px}
+  .map-panel-top{height:60px;padding:0 10px}
+  .map-overline{font-size:8px}
+  .map-panel-top h2{font-size:14px}
+  .map-top-right{font-size:8px;gap:8px}
+  .map-expand{width:28px;height:28px}
+  .sector-layer{inset:4% 0 9%}
+  .sector{width:78px;min-height:50px;padding-left:32px;padding-right:4px}
+  .sector:before{width:18px;height:20px;left:7px}
+  .sector .sector-id{left:12px;font-size:7px}
+  .sector .sector-name{max-width:43px;font-size:8px}
+  .sector .sector-status{font-size:6px}
+  .sector .sector-troops{font-size:9px;right:4px;top:4px}
+  .map-scale{font-size:7px}
+  .map-hint{font-size:7px}
+  .map-legend{height:auto;min-height:36px;padding:7px 8px;justify-content:space-between;gap:4px;font-size:7px;flex-wrap:wrap}
+  .legend-dot{width:7px;height:7px;margin-right:3px}
+  .legend-help{display:none}
+  .control-rail{display:grid;grid-template-columns:1fr;gap:8px}
+  .rail-card{padding:12px}
+  .rail-heading{font-size:8px}
+  .status-chip,.round-small{font-size:8px}
+  .self-name{font-size:12px}
+  .self-label{font-size:8px}
+  .self-online{font-size:8px}
+  .arsenal-grid>div>span{font-size:8px}
+  .arsenal-grid>div>b{font-size:19px}
+  .resource-note{font-size:8px;line-height:1.4}
+  .order-lock-state{font-size:9px}
+  .order-type{font-size:10px;min-height:36px}
+  .order-instructions{font-size:9px;line-height:1.45}
+  .selection-summary{font-size:9px;min-height:34px}
+  .troop-control label{font-size:8px}
+  .stepper{height:30px}
+  .stepper button{height:28px;width:31px;font-size:17px}
+  .stepper span{font-size:11px}
+  .order-error{font-size:9px}
+  .order-submit{font-size:11px;min-height:40px}
+  .order-wait>b{font-size:15px}
+  .order-wait p{font-size:11px}
+  .players-list{grid-template-columns:1fr 1fr;gap:10px 8px}
+  .commander-copy b{font-size:9px}
+  .commander-copy small{font-size:7px}
+  .event-card{padding:12px;min-height:90px}
+  .event-heading{font-size:8px}
+  .dispatch-live{font-size:7px}
+  .event-item{font-size:9px;max-width:100%}
+  .event-item time{font-size:7px}
+  .no-events{font-size:10px}
+  .rules-card{min-height:112px;padding:13px}
+  .rules-stamp{font-size:8px}
+  .rules-card h3{font-size:16px}
+  .rules-card p{font-size:10px;max-width:220px;line-height:1.4}
+  .rules-foot{font-size:6px}
+  .winner-banner{padding:13px}
+  .winner-banner h2{font-size:16px}
+  .winner-banner p{font-size:11px}
+  .winner-banner .button{width:100%;margin:0}
+  .app-footer{font-size:7px;letter-spacing:.025em}
+  .app-footer span:nth-child(2){display:none}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Keep compact controls and map labels readable on phone screens. */
+@media(max-width:640px){
+  .nav-note,.field-label,.panel-foot,.lobby-divider,.lobby-room-code>span,.lobby-bottom p,.hint-line{font-size:10px}
+  .nav-version,.entry-footer,.aside-info-foot,.app-footer{font-size:9px}
+  .map-stamp,.visual-caption,.terrain-label span,.map-coordinates{font-size:9px}
+  .how-item p{font-size:11px}
+  .lobby-player-copy span{font-size:10px}
+  .app-header .brand{font-size:18px}
+  .icon-button{min-height:40px}
+  .live-label,.header-operation #room-context,.leave-label{font-size:9px}
+  .game-heading .eyebrow,.round-card>span:first-child,.round-card #phase-label{font-size:9px}
+  .map-overline,.map-top-right,.rail-heading,.status-chip,.round-small{font-size:9px}
+  .campaign-map{min-height:340px}
+  .map-panel-top{height:62px}
+  .map-panel-top h2{font-size:15px}
+  .map-expand{width:40px;height:40px;flex:0 0 40px}
+  .sector{width:82px;min-height:52px}
+  .sector .sector-id{font-size:8px}
+  .sector .sector-name{max-width:46px;font-size:9px}
+  .sector .sector-status{max-width:48px;overflow:hidden;text-overflow:ellipsis;font-size:8px}
+  .sector .sector-troops{font-size:10px}
+  .map-scale,.map-hint{font-size:8px}
+  .map-legend{min-height:40px;font-size:8px;gap:6px}
+  .legend-dot{width:8px;height:8px}
+  .self-label,.self-online,.arsenal-grid>div>span,.resource-note,.troop-control label{font-size:9px}
+  .order-lock-state,.order-instructions,.selection-summary,.order-error{font-size:10px}
+  .order-type{font-size:11px;min-height:40px}
+  .stepper{height:42px}
+  .stepper button{height:40px;width:42px}
+  .stepper span{font-size:12px}
+  .commander-copy b{font-size:10px}
+  .commander-copy small,.dispatch-live,.event-item time{font-size:8px}
+  .event-heading{font-size:9px}
+  .event-item{font-size:10px}
+  .rules-foot{font-size:8px}
+}
