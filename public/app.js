@@ -13,7 +13,8 @@ let sourceSelection = null;
 let targetSelection = null;
 let activeKind = 'attack';
 let troopCount = 1;
-let events = null;
+let syncTimer = null;
+let syncInFlight = false;
 let toastTimer = null;
 
 function showToast(message, isError = false) {
@@ -63,23 +64,36 @@ function setSession(result) {
   render();
 }
 function connect() {
-  if (events) events.close();
+  if (syncTimer) clearInterval(syncTimer);
   if (!session) return;
-  events = new EventSource(`/api/rooms/${session.code}/events?playerId=${encodeURIComponent(session.playerId)}`);
-  events.addEventListener('state', (event) => {
-    const priorPhase = game?.phase;
-    const priorRound = game?.round;
-    game = JSON.parse(event.data);
-    if (game.round !== priorRound || game.phase !== priorPhase) {
-      sourceSelection = null;
-      targetSelection = null;
-      troopCount = 1;
+  const sync = async () => {
+    if (!session || syncInFlight || document.visibilityState === 'hidden') return;
+    syncInFlight = true;
+    try {
+      const result = await request(`/api/rooms/${session.code}?playerId=${encodeURIComponent(session.playerId)}`);
+      const priorPhase = game?.phase;
+      const priorRound = game?.round;
+      game = result.state;
+      if (game.round !== priorRound || game.phase !== priorPhase) {
+        sourceSelection = null;
+        targetSelection = null;
+        troopCount = 1;
+      }
+      render();
+    } catch {
+      // Keep the last state on screen during a brief network interruption.
+    } finally {
+      syncInFlight = false;
     }
-    render();
-  });
-  events.onerror = () => {
-    // EventSource reconnects automatically; the status is shown in its browser-managed connection.
   };
+  sync();
+  syncTimer = setInterval(sync, 1800);
+}
+function handleVisibility() {
+  if (document.visibilityState === 'visible' && session) {
+    if (syncTimer) { clearInterval(syncTimer); syncTimer = null; }
+    connect();
+  }
 }
 async function createRoom(event) {
   event.preventDefault();
@@ -288,7 +302,8 @@ function setKind(kind) {
   renderMap(); renderOrder();
 }
 async function leaveRoom() {
-  if (events) events.close();
+  if (syncTimer) clearInterval(syncTimer);
+  syncTimer = null;
   session = null; game = null; persist();
   warRoom.classList.add('hidden'); entry.classList.remove('hidden');
 }
@@ -313,6 +328,7 @@ function bindUI() {
     if (event.key === 'Escape') { sourceSelection = null; targetSelection = null; renderMap(); renderOrder(); }
     if ((event.key === 'Enter' || event.key === ' ') && event.target.matches('.sector')) event.preventDefault();
   });
+  document.addEventListener('visibilitychange', handleVisibility);
 }
 bindUI();
 const saved = JSON.parse(localStorage.getItem(storeKey) || 'null');

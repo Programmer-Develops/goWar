@@ -4,6 +4,7 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 
 const ROOT = __dirname;
+const STATIC_ROOT = path.join(ROOT, 'public');
 const PORT = Number(process.env.PORT || 3000);
 const rooms = new Map();
 const streams = new Map();
@@ -81,6 +82,11 @@ function addPlayer(room, name, id) {
   if (room.players.length === 1) room.hostId = id;
   log(room, `${player.name} joined the command room.`);
   return player;
+}
+function createRoom(name, playerId = newId(), code = newCode()) {
+  const room = { code, hostId: playerId, phase: 'lobby', round: 0, createdAt: Date.now(), players: [], sectors: SECTORS.map((s) => ({ ...s, owner: null, baseFor: null, troops: 0 })), orders: {}, events: [] };
+  const player = addPlayer(room, name, playerId);
+  return { room, player };
 }
 function startGame(room) {
   if (room.players.length < 2) throw new Error('Invite at least one other commander to deploy.');
@@ -219,10 +225,9 @@ const app = http.createServer(async (req, res) => {
   try {
     if (req.method === 'OPTIONS') { res.writeHead(204, { 'access-control-allow-origin': '*', 'access-control-allow-methods': 'GET,POST,OPTIONS', 'access-control-allow-headers': 'content-type' }); return res.end(); }
     if (req.method === 'POST' && url.pathname === '/api/rooms') {
-      const body = await readBody(req); const playerId = newId(); const code = newCode();
-      const room = { code, hostId: playerId, phase: 'lobby', round: 0, createdAt: Date.now(), players: [], sectors: SECTORS.map((s) => ({ ...s, owner: null, baseFor: null, troops: 0 })), orders: {}, events: [] };
-      rooms.set(code, room); const player = addPlayer(room, body.name, playerId); publish(room);
-      return sendJson(res, 201, { state: publicState(room, player.id), playerId });
+      const body = await readBody(req); const { room, player } = createRoom(body.name);
+      rooms.set(room.code, room); publish(room);
+      return sendJson(res, 201, { state: publicState(room, player.id), playerId: player.id });
     }
     const joinMatch = url.pathname.match(/^\/api\/rooms\/([A-Z0-9]+)\/join$/);
     if (req.method === 'POST' && joinMatch) {
@@ -270,8 +275,9 @@ const app = http.createServer(async (req, res) => {
       res.on('close', () => { clearInterval(keepAlive); list.delete(watcher); if (!list.size) streams.delete(room.code); const p = playerFor(room, playerId); if (p) p.online = false; publish(room); });
       return;
     }
-    const requested = path.normalize(path.join(ROOT, decodeURIComponent(url.pathname === '/' ? 'index.html' : url.pathname)));
-    if (!requested.startsWith(ROOT)) return sendJson(res, 403, { error: 'Forbidden.' });
+    const requested = path.normalize(path.join(STATIC_ROOT, decodeURIComponent(url.pathname === '/' ? 'index.html' : url.pathname)));
+    const relative = path.relative(STATIC_ROOT, requested);
+    if (relative.startsWith('..') || path.isAbsolute(relative)) return sendJson(res, 403, { error: 'Forbidden.' });
     fs.readFile(requested, (error, data) => {
       if (error) return sendJson(res, 404, { error: 'Not found.' });
       res.writeHead(200, { 'content-type': mime(requested), 'cache-control': 'no-cache' }); res.end(data);
@@ -280,4 +286,8 @@ const app = http.createServer(async (req, res) => {
     sendJson(res, 400, { error: error instanceof SyntaxError ? 'Invalid JSON.' : error.message || 'Request failed.' });
   }
 });
-app.listen(PORT, '0.0.0.0', () => console.log(`goWar command server listening on http://localhost:${PORT}`));
+if (require.main === module) {
+  app.listen(PORT, '0.0.0.0', () => console.log(`goWar command server listening on http://localhost:${PORT}`));
+}
+
+module.exports = { addPlayer, createRoom, log, newCode, newId, playerFor, publicState, resolveRound, startGame, validateOrder };

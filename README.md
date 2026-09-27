@@ -10,7 +10,18 @@ Requires Node.js 18 or later; there are no package dependencies.
 node server.js
 ```
 
-Open `http://localhost:3000` on the host computer. For friends on the same Wi-Fi, they can open `http://<host-computer-LAN-address>:3000` on their devices. For players on different networks, run the server on an internet-accessible host and share its address. Room state currently lives in server memory, so active rooms end if the server restarts.
+Open `http://localhost:3000` on the host computer. For friends on the same Wi-Fi, they can open `http://<host-computer-LAN-address>:3000` on their devices. For players on different networks, deploy the app to an internet-accessible host and share its address.
+
+The local Node server keeps room data in memory. Restarting it ends any active local rooms.
+
+## Deploy to Vercel
+
+The browser app is served from `public/`, and room API routes live under `api/rooms/`. Vercel runs API requests in separate serverless instances, so deployed rooms use Upstash Redis rather than the local server's in-memory store. Connect an Upstash Redis database to the Vercel project and make these environment variables available to the deployment:
+
+- `UPSTASH_REDIS_REST_URL`
+- `UPSTASH_REDIS_REST_TOKEN`
+
+The API also recognizes `KV_REST_API_URL` and `KV_REST_API_TOKEN`. After connecting storage, redeploy. Rooms expire after 24 hours. The browser checks room state every 1.8 seconds while the tab is open.
 
 ## Rules
 
